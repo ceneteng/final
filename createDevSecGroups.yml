@@ -89,7 +89,7 @@
     ec2_vpc_subnet_facts:
       region: us-east-1
       filters:
-        "tag: Name" : "PublicSubnetDev"
+        "tag:Name" : PublicSubnetDev
     register: snetfacts
   
   - name: subnet id
