@@ -32,8 +32,8 @@
         vpc_subnet_id: "{{ subnet_ids.0 }}"
       register: ec2
 
-    - pause:
-        minutes: 1
+    # - pause:
+    #     minutes: 1
 
     - name: create hostlist
       add_host:
@@ -47,6 +47,10 @@
   become: True
   gather_facts: false
   tasks:
+  - name: wait for server response
+    wait_for_connection:
+      delay: 5
+      timeout: 60
   - Name: Install Python
     raw: sudo apt-get -y install python-minimal
   - Name: Install packages
