@@ -79,7 +79,7 @@
       region: us-east-1
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
-      egress_rules:
+      rules_egress:
         - proto: tcp
           ports:
           - 22
