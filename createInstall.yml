@@ -79,19 +79,6 @@
   tasks:
     - shell: sudo systemctl restart apache2
 
-    - debug: 
-        var: ec2
-
-- name: create AMI
-  hosts: ubulaunched
-  tasks:
-    - name: create AMI
-      ec2_ami: 
-        region: us-east-1
-        name: myWordpress
-        instance_id: "{{ item.id }}"
-        wait: yes
-      with_items: "{{ ec2.instances }}"
 
 
     
