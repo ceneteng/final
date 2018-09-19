@@ -80,6 +80,7 @@
     - shell: sudo systemctl restart apache2
 
 - name: create AMI
+  hosts: ubulaunched
   tasks:
     - pause:
         minutes: 2
