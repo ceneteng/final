@@ -83,12 +83,12 @@
   tasks:
     - shell: sudo systemctl restart apache2
 
+- debug: 
+    var: ec2
+
 - name: create AMI
   hosts: ubulaunched
   tasks:
-    - pause:
-        minutes: 2
-
     - name: create AMI
       ec2_ami: 
         region: us-east-1
