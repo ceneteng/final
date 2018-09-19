@@ -79,16 +79,18 @@
   tasks:
     - shell: sudo systemctl restart apache2
 
-- pause:
-    minutes: 2
-
 - name: create AMI
-  ec2_ami: 
-    region: us-east-1
-    name: myWordpress
-    instance_id: "{{ item.id }}"
-    wait: yes
-  with_items: "{{ ec2.instances }}"
+  tasks:
+    - pause:
+        minutes: 2
+
+    - name: create AMI
+      ec2_ami: 
+        region: us-east-1
+        name: myWordpress
+        instance_id: "{{ item.id }}"
+        wait: yes
+      with_items: "{{ ec2.instances }}"
 
 
     
