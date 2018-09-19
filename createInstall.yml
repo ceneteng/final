@@ -83,8 +83,8 @@
   tasks:
     - shell: sudo systemctl restart apache2
 
-- debug: 
-    var: ec2
+    - debug: 
+        var: ec2
 
 - name: create AMI
   hosts: ubulaunched
