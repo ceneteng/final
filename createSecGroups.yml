@@ -24,6 +24,7 @@
       region: us-east-1
       description: sg for application load balancer
       vpc_id: "{{ vpc_ids.0 }}"
+    register: alb
 
   - name: create bastion sec group
     ec2_group:
@@ -36,6 +37,7 @@
           ports:
           - 22
           cidr_ip: 198.207.185.100/32
+    register: bast
 
   - name: create wp sec group
     ec2_group:
@@ -47,11 +49,12 @@
         - proto: tcp
           ports:
           - 80
-          group_id: TestALBSG
+          group_id: "{{ alb.group_id }}"
         - proto: tcp
           ports:
           - 22
-          group_id: TestBastion
+          group_id: "{{ bast.group_id }}"
+    register: wp
 
   - name: update alb sec group
     ec2_group:
@@ -68,7 +71,7 @@
         - proto:
           ports:
           - 80
-          group_id: TestWPSG
+          group_id: "{{ wp.group_id }}"
 
   - name: update bastion sec group
     ec2_group:
@@ -80,4 +83,4 @@
         - proto:
           ports:
           - 22
-          group_id: TestWPSG
+          group_id: "{{ wp.group_id }}"
