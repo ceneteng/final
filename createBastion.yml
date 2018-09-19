@@ -1,0 +1,35 @@
+- name: create ec2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+    - name: get subnets
+      ec2_vpc_subnet_facts:
+        region: us-east-1
+        filters:
+          "tag: Name" : "PublicSubnetTest"
+      register: snetfacts
+    
+    - name: subnet id
+      set_fact:
+        subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+
+    - name: provision instances
+      ec2:
+        key_name: Mac
+        group: "{{}}"
+        region: us-east-1
+        instance_type: t2.micro
+        image: ami-01ab44c1bdbab4161
+        exact_count: 1
+        count_tag:
+          Name: bastion
+        instance_tags:
+          Name: bastion
+      with_items: subnet_ids
+        
+
+    
+
+        
