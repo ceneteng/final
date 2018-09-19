@@ -1,0 +1,6 @@
+- name: Installing git
+  hosts: all
+  become: yes
+  roles:
+    - git
+
