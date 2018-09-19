@@ -32,7 +32,7 @@
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
       rules:
-        - proto:
+        - proto: tcp
           ports:
           - 22
           cidr_ip: 198.207.185.100/32
@@ -44,10 +44,12 @@
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
       rules: 
-        - proto:
+        - proto: tcp
           ports:
           - 80
           group_id: TestALBSG
+        - proto: tcp
+          ports:
           - 22
           group_id: TestBastion
 
@@ -58,7 +60,7 @@
       description: sg for application load balancer
       vpc_id: "{{ vpc_ids.0 }}"
       rules:
-        - proto:
+        - proto: tcp
           ports:
           - 80
           cidr_ip: 0.0.0.0/0
