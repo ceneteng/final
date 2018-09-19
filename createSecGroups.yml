@@ -14,6 +14,13 @@
   - debug:
       var: vpcfacts
   
-  # - name: get vpc ID
-  #   set_fact: 
-  #     vpc_ids: "{{ vpcfacts.vpcs|map(attribute='id')|list }}"
+  - name: get vpc ID
+    set_fact: 
+      vpc_ids: "{{ vpcfacts.vpcs|map(attribute='id')|list }}"
+
+  - name: create alb sec group
+    ec2_group:
+      name: TestALBSG
+      region: us-east-1
+      description: sg for application load balancer
+      vpc_id: "{{ vpc_ids.0 }}"
