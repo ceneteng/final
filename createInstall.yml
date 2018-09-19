@@ -31,10 +31,7 @@
           App: wordpress
         vpc_subnet_id: "{{ subnet_ids.0 }}"
       register: ec2
-      # with_items: "{{ subnet_ids }}"
 
-    - debug:
-       var: ec2
     - pause:
         minutes: 1
 
