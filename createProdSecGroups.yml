@@ -107,6 +107,6 @@
       assign_public_ip: yes
       exact_count: 1
       count_tag:
-        Name: bastion
+        Name: ProdBastion
       instance_tags:
         Name: bastion

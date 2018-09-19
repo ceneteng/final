@@ -20,7 +20,8 @@
     "PublicSubnetProdVPC" : {
         "Type" : "AWS::EC2::Subnet",
         "Properties" : {
-            "CidrBlock" : "10.2.1.0/24",
+            "CidrBlock" : "10.2.3.0/24",
+            "AvailabilityZone" : "us-east-1e",
             "MapPublicIpOnLaunch" : "True",
             "VpcId" : { "Ref" : "ProductionVPC" },
             "Tags" : [
@@ -31,6 +32,22 @@
                 
                     ]
                        }
+                            },
+    "PublicSubnet2ProdVPC" : {
+        "Type" : "AWS::EC2::Subnet",
+        "Properties" : {
+            "CidrBlock" : "10.2.4.0/24",
+            "AvailabilityZone" : "us-east-1f",
+            "MapPublicIpOnLaunch" : "True",
+            "VpcId" : { "Ref" : "ProductionVPC" },
+            "Tags" : [
+                {
+                    "Key" : "Name",
+                    "Value" : "PublicSubnet2Prod"
+                }
+                
+                    ]
+                        }
                             },
     "PrivateSubnetProdVPC" : {
         "Type" : "AWS::EC2::Subnet",
@@ -68,7 +85,8 @@
         "PublicSubnetTestVPC" : {
         "Type" : "AWS::EC2::Subnet",
         "Properties" : {
-            "CidrBlock" : "10.3.1.0/24",
+            "CidrBlock" : "10.3.3.0/24",
+            "AvailabilityZone" : "us-east-1e",
             "MapPublicIpOnLaunch" : "True",
             "VpcId" : { "Ref" : "TestVPC" },
             "Tags" : [
@@ -80,6 +98,22 @@
                     ]
                        }
                             },
+        "PublicSubnet2TestVPC" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "CidrBlock" : "10.3.4.0/24",
+                "AvailabilityZone" : "us-east-1f",
+                "MapPublicIpOnLaunch" : "True",
+                "VpcId" : { "Ref" : "TestVPC" },
+                "Tags" : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "PublicSubnet2Test"
+                    }
+                    
+                        ]
+                            }
+                                },
                             
         "PrivateSubnetTestVPC" : {
         "Type" : "AWS::EC2::Subnet",
@@ -116,7 +150,8 @@
         "PublicSubnetDevVPC" : {
         "Type" : "AWS::EC2::Subnet",
         "Properties" : {
-            "CidrBlock" : "10.4.1.0/24",
+            "CidrBlock" : "10.4.3.0/24",
+            "AvailabilityZone" : "us-east-1e",
             "MapPublicIpOnLaunch" : "True",
             "VpcId" : { "Ref" : "DevelopmentVPC" },
             "Tags" : [
@@ -128,7 +163,22 @@
                     ]
                        }
                             },
-        
+        "PublicSubnet2DevVPC" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+                "CidrBlock" : "10.4.4.0/24",
+                "AvailabilityZone" : "us-east-1f",
+                "MapPublicIpOnLaunch" : "True",
+                "VpcId" : { "Ref" : "DevelopmentVPC" },
+                "Tags" : [
+                    {
+                        "Key" : "Name",
+                        "Value" : "PublicSubnet2Dev"
+                    }
+                    
+                        ]
+                            }
+                                },
         "PrivateSubnetDevVPC" : {
         "Type" : "AWS::EC2::Subnet",
         "Properties" : {
@@ -361,6 +411,14 @@
         "SubnetId" : { "Ref" : "PublicSubnetDevVPC" }
                         }
                             },
+        "AssociateDevRouteTable2" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+            "RouteTableId" : { "Ref" : "DevRouteTable" },
+            "SubnetId" : { "Ref" : "PublicSubnet2DevVPC" }
+                            }
+                                },
+                                
                             
         "AssociateTestRouteTable" : {
         "Type" : "AWS::EC2::SubnetRouteTableAssociation",
@@ -369,7 +427,13 @@
         "SubnetId" : { "Ref" : "PublicSubnetTestVPC" }
                         }
                             },
-                            
+        "AssociateTestRouteTable2" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+            "RouteTableId" : { "Ref" : "TestRouteTable" },
+            "SubnetId" : { "Ref" : "PublicSubnet2TestVPC" }
+                            }
+                                },
         "AssociateProdRouteTable" : {
         "Type" : "AWS::EC2::SubnetRouteTableAssociation",
         "Properties" : {
@@ -377,6 +441,14 @@
         "SubnetId" : { "Ref" : "PublicSubnetProdVPC" }
                         }
             },
+
+        "AssociateProdRouteTable2" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+            "RouteTableId" : { "Ref" : "ProdRouteTable" },
+            "SubnetId" : { "Ref" : "PublicSubnet2ProdVPC" }
+                            }
+                },
 
         "TestNatSG" : {
         "Type" : "AWS::EC2::SecurityGroup",
@@ -554,7 +626,7 @@
 
                 "Key" : "Type",
                 "Value" : "NAT"
-            }],
+            }]
         }
     },
         "DevPrivRouteTable" : {
@@ -658,7 +730,7 @@
 
                 "Key" : "Type",
                 "Value" : "NAT"
-            }],
+            }]
         }
     },
         "ProdPrivRouteTable" : {
