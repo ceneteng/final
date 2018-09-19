@@ -9,10 +9,10 @@
       region: us-east-1
       filter:
         "tag:name" : "TestVPC"
-      register: vpcfacts
+    register: vpcfacts
 
   - debug:
-      var: vpcfacts
+      var: vpcfactst pu
   
   # - name: get vpc ID
   #   set_fact: 
