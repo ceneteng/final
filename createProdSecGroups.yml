@@ -85,28 +85,28 @@
           - 22
           group_id: "{{ wp.group_id }}"
 
-    - name: get subnets
-      ec2_vpc_subnet_facts:
-        region: us-east-1
-        filters:
-          "tag: Name" : "PublicSubnetProd"
-      register: snetfacts
-    
-    - name: subnet id
-      set_fact:
-        subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+  - name: get subnets
+    ec2_vpc_subnet_facts:
+      region: us-east-1
+      filters:
+        "tag: Name" : "PublicSubnetProd"
+    register: snetfacts
+  
+  - name: subnet id
+    set_fact:
+      subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
 
-    - name: provision instances
-      ec2:
-        key_name: Mac
-        group: "ProdBastion"
-        region: us-east-1
-        instance_type: t2.micro
-        image: ami-01ab44c1bdbab4161
-        vpc_subnet_id: "{{ subnet_ids.0 }}"
-        assign_public_ip: yes
-        exact_count: 1
-        count_tag:
-          Name: bastion
-        instance_tags:
-          Name: bastion
+  - name: provision instances
+    ec2:
+      key_name: Mac
+      group: "ProdBastion"
+      region: us-east-1
+      instance_type: t2.micro
+      image: ami-01ab44c1bdbab4161
+      vpc_subnet_id: "{{ subnet_ids.0 }}"
+      assign_public_ip: yes
+      exact_count: 1
+      count_tag:
+        Name: bastion
+      instance_tags:
+        Name: bastion
