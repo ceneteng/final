@@ -24,3 +24,58 @@
       region: us-east-1
       description: sg for application load balancer
       vpc_id: "{{ vpc_ids.0 }}"
+
+  - name: create bastion sec group
+    ec2_group:
+      name: TestBastion
+      region: us-east-1
+      description: sg for wordpress
+      vpc_id: "{{ vpc_ids.0 }}"
+      rules:
+        - proto:
+          ports:
+          - 22
+          cidr_ip: 198.207.185.100/32
+
+  - name: create wp sec group
+    ec2_group:
+      name: TestWPSG
+      region: us-east-1
+      description: sg for wordpress
+      vpc_id: "{{ vpc_ids.0 }}"
+      rules: 
+        - proto:
+          ports:
+          - 80
+          group_id: TestALBSG
+          - 22
+          group_id: TestBastion
+
+  - name: update alb sec group
+    ec2_group:
+      name: TestALBSG
+      region: us-east-1
+      description: sg for application load balancer
+      vpc_id: "{{ vpc_ids.0 }}"
+      rules:
+        - proto:
+          ports:
+          - 80
+          cidr_ip: 0.0.0.0/0
+      rules_egress:
+        - proto:
+          ports:
+          - 80
+          group_id: TestWPSG
+
+  - name: update bastion sec group
+    ec2_group:
+      name: TestBastion
+      region: us-east-1
+      description: sg for wordpress
+      vpc_id: "{{ vpc_ids.0 }}"
+      egress_rules:
+        - proto:
+          ports:
+          - 22
+          group_id: TestWPSG
