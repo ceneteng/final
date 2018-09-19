@@ -7,7 +7,7 @@
   - name: get VPC facts
     ec2_vpc_net_facts:
       region: us-east-1
-      filter:
+      filters:
         "tag:name" : "TestVPC"
     register: vpcfacts
 
