@@ -29,9 +29,9 @@
           Name: wordpress
           Type: autospin
           App: wordpress
-        vpc_subnet_id: "{{ item }}"
+        vpc_subnet_id: "{{ subnet_ids.0 }}"
       register: ec2
-      with_items: "{{ subnet_ids }}"
+      # with_items: "{{ subnet_ids }}"
 
     - debug:
        var: ec2
@@ -40,10 +40,10 @@
 
     - name: create hostlist
       add_host:
-        hostname: "{{ ec2.results.instances.private_dns_name }}"
+        hostname: "{{ item.private_dns_name }}"
         groupname: ubulaunched
         ansible_ssh_user: ubuntu
-      # with_items: "{{ ec2.results.instances }}"
+      with_items: "{{ ec2.instances }}"
 
 - name: install
   hosts: ubulaunched
