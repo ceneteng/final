@@ -28,7 +28,7 @@
           Name: wordpress
           Type: autospin
           App: wordpress
-          vpc_subnet_id: {{ item }}
+          vpc_subnet_id: "{{ item }}"
       with_items: "{{ subnet_ids }}"
       register: ec2
 
