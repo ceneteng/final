@@ -21,7 +21,7 @@
         group: DevPrivSrvr
         region: us-east-1
         instance_type: t2.micro
-        image: ami-0552e3455b9bc8d50
+        image: ami-04169656fea786776
         #exact_count: 1
         count_tag:
           Name: Wordpress
