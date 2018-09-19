@@ -1,0 +1,19 @@
+- name: create ec2 instances
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+
+  - name: get VPC facts
+    ec2_vpc_net_facts:
+      region: us-east-1
+      filter:
+        "tag:name" : "TestVPC"
+      register: vpcfacts
+
+  - debug:
+      var: vpcfacts
+  
+  # - name: get vpc ID
+  #   set_fact: 
+  #     vpc_ids: "{{ vpcfacts.vpcs|map(attribute='id')|list }}"
