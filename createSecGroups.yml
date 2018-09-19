@@ -12,7 +12,7 @@
     register: vpcfacts
 
   - debug:
-      var: vpcfactst pu
+      var: vpcfacts
   
   # - name: get vpc ID
   #   set_fact: 
