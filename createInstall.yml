@@ -6,6 +6,7 @@
 
     - name: get subnets
       ec2_vpc_subnet_facts:
+        region: us-east-1
         filters:
           "tag:Name" : PrivateSubnetDev
       register: snetfacts
