@@ -50,7 +50,7 @@
   - name: wait for server response
     wait_for_connection:
       delay: 5
-      timeout: 60
+      timeout: 120
   - Name: Install Python
     raw: sudo apt-get -y install python-minimal
   - Name: Install packages
