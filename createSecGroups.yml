@@ -68,7 +68,7 @@
           - 80
           cidr_ip: 0.0.0.0/0
       rules_egress:
-        - proto:
+        - proto: tcp
           ports:
           - 80
           group_id: "{{ wp.group_id }}"
@@ -80,7 +80,7 @@
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
       egress_rules:
-        - proto:
+        - proto: tcp
           ports:
           - 22
           group_id: "{{ wp.group_id }}"
