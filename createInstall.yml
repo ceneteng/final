@@ -13,7 +13,7 @@
     
     - name: subnet id
       set_fact:
-        subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list) }}"
+        subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
 
     - name: provision instances
       ec2:
