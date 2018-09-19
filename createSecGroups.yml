@@ -32,11 +32,6 @@
       region: us-east-1
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
-      rules:
-        - proto: tcp
-          ports:
-          - 22
-          cidr_ip: 198.207.185.100/32
     register: bast
 
   - name: create wp sec group
@@ -79,6 +74,11 @@
       region: us-east-1
       description: sg for wordpress
       vpc_id: "{{ vpc_ids.0 }}"
+      rules:
+        - proto: tcp
+          ports:
+          - 22
+          cidr_ip: 198.207.185.100/32
       rules_egress:
         - proto: tcp
           ports:
