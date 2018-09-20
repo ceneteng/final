@@ -76,6 +76,7 @@
 
   - name: create target group
     elb_target_group:
+      region: us-east-1
       name: wordpress
       protocol: http
       port: 80
