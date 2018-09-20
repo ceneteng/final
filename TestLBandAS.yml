@@ -15,19 +15,20 @@
     set_fact:
       pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
   
-  - name: get pub subnets
-    ec2_vpc_subnet_facts:
-      region: us-east-1
-      filters:
-        "tag:Name" : "PrivateSubnetTest"
-    register: psnetfacts
+  # - name: get pub subnets
+  #   ec2_vpc_subnet_facts:
+  #     region: us-east-1
+  #     filters:
+  #       "tag:Name" : "PrivateSubnetTest"
+  #   register: psnetfacts
       
-  - name: priv subnet id
-    set_fact:
-      priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
+  # - name: priv subnet id
+  #   set_fact:
+  #     priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
 
   - debug:
       var: priv_subnet_ids
+      var: pub_subnet_ids
 
   - name: create launch config
     ec2_lc:
