@@ -82,6 +82,7 @@
       port: 80
       vpc_id: "{{ vpc_ids.0 }}"
       state: present
+    register: tg
 
   - elb_application_lb:
       name: wpalb
@@ -98,5 +99,10 @@
               TargetGroupName: wordpress # Required. The name of the target group
     state: present
 
+  - name: update asg
+    ec2_asg:
+      name: wordpress
+      region: us-east-1
+      target_group_arns: "{{ tg.target_group_arn }}"
 
 
