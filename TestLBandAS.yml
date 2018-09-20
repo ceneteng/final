@@ -3,6 +3,29 @@
   connection: local
   gather_facts: false
   tasks: 
+
+   - name: get pub subnets
+    ec2_vpc_subnet_facts:
+      region: us-east-1
+      filters:
+        "tag:Name" : "PublicSubnet*Test"
+    register: snetfacts
+      
+  - name: subnet id
+    set_fact:
+      pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+  
+  - name: get pub subnets
+    ec2_vpc_subnet_facts:
+      region: us-east-1
+      filters:
+        "tag:Name" : "PrivateSubnetTest"
+    register: snetfacts
+      
+  - name: subnet id
+    set_fact:
+      priv_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+
   - name: create launch config
     ec2_lc:
       region: us-east-1
@@ -17,6 +40,18 @@
         volume_type: gp2
         delete_on_termination: true
 
+  - name: add asg
+    ec2_asg:
+    name: wordpress
+    availability_zones: [ 'us-east-1e', 'us-east-1f' ]
+    min_size: 3
+    max_size: 5
+    desired_capacity: 3
+    vpc_zone_identifier: {{ priv_subnet_ids.0 }}
+    tags:
+      - environment: test
+        propagate_at_launch: yes
+
   - name: get subnets
     ec2_vpc_subnet_facts:
       region: us-east-1
@@ -26,21 +61,29 @@
       
   - name: subnet id
     set_fact:
-      subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+      pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
 
 
   - debug:
       var: subnet_ids
 
-  # - name: add asg
-  #   ec2_asg:
-  #   name: wordpress
-  #   load_balancers: [ 'lb1', 'lb2' ]
-  #   availability_zones: [ 'us-east-1e', 'us-east-1f' ]
-  #   min_size: 1
-  #   max_size: 10
-  #   desired_capacity: 5
-  #   vpc_zone_identifier: [ 'subnet-abcd1234', 'subnet-1a2b3c4d' ]
-  #   tags:
-  #     - environment: production
-  #       propagate_at_launch: no
+
+  - elb_application_lb:
+      name: wpalb
+      security_groups:
+        - TestALBSG
+      subnets: {{ subnet_ids }}
+
+      listeners:
+        - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
+          Port: 80 # Required. The port on which the load balancer is listening.
+          # The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.
+             - Type: forward # Required. Only 'forward' is accepted at this time
+              TargetGroupName: wordpress # Required. The name of the target group
+      state: present
+
+    - name: add asg
+    ec2_asg: 
+    name: wordpress
+    load_balancers: [ wpalb ] 
+
