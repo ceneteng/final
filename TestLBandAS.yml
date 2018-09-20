@@ -72,7 +72,7 @@
       desired_capacity: 3
       vpc_zone_identifier: "{{ pub_subnet_ids }}"
       tags:
-        Env: Test
+        - Env: test
 
   # - elb_application_lb:
   #     name: wpalb
