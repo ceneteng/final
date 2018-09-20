@@ -59,8 +59,7 @@
         delete_on_termination: true
       vpc_id: "{{ vpc_ids.0 }}"
       assign_public_ip: no
-      instance_tags:
-        Name: TestWordpress
+ 
 
   - name: add asg
     ec2_asg:
@@ -74,6 +73,8 @@
       vpc_zone_identifier: "{{ pub_subnet_ids }}"
       tags:
         Env: Test
+      instance_tags:
+        Name: TestWordpress
 
 
 
