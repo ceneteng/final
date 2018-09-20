@@ -81,10 +81,12 @@
         - TestALBSG
       subnets: "{{ pub_subnet_ids }}"
       state: present
+    register: lb
 
   - name: update asg
     ec2_asg: 
       name: wordpress
       region: us-east-1
-      load_balancers: wpalb
+      load_balancers: 
+        - wpalb
 
