@@ -19,7 +19,7 @@
     ec2_vpc_subnet_facts:
       region: us-east-1
       filters:
-        "tag:Name" : PrivateSubnetTest
+        "tag:Name" : "PrivateSubnetTest"
     register: psnetfacts
       
   - name: priv subnet id
