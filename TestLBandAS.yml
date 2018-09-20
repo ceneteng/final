@@ -58,6 +58,9 @@
         volume_type: gp2
         delete_on_termination: true
       vpc_id: "{{ vpc_ids.0 }}"
+      assign_public_ip: no
+      instance_tags:
+        Name: TestWordpress
 
   - name: add asg
     ec2_asg:
@@ -69,6 +72,9 @@
       max_size: 5
       desired_capacity: 3
       vpc_zone_identifier: "{{ pub_subnet_ids }}"
+      tags:
+        Env: Test
+
 
 
 
