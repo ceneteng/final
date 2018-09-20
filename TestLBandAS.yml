@@ -73,11 +73,6 @@
       vpc_zone_identifier: "{{ pub_subnet_ids }}"
       tags:
         Env: Test
-      instance_tags:
-        Name: TestWordpress
-
-
-
 
   # - elb_application_lb:
   #     name: wpalb
