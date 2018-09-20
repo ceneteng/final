@@ -4,6 +4,20 @@
   gather_facts: false
   tasks: 
 
+    - name: get VPC facts
+    ec2_vpc_net_facts:
+      region: us-east-1
+      filters:
+        "tag:Name" : "TestVPC"
+    register: vpcfacts
+
+  - debug:
+      var: vpcfacts
+  
+  - name: get vpc ID
+    set_fact: 
+      vpc_ids: "{{ vpcfacts.vpcs|map(attribute='id')|list }}"
+
   - name: get pub subnets
     ec2_vpc_subnet_facts:
       region: us-east-1
@@ -43,6 +57,7 @@
         volume_size: 8
         volume_type: gp2
         delete_on_termination: true
+      vpd_id: "{{ vpc_ids.0 }}"
 
   - name: add asg
     ec2_asg:
