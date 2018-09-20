@@ -57,7 +57,7 @@
         volume_size: 8
         volume_type: gp2
         delete_on_termination: true
-      vpd_id: "{{ vpc_ids.0 }}"
+      vpc_id: "{{ vpc_ids.0 }}"
 
   - name: add asg
     ec2_asg:
