@@ -83,8 +83,8 @@
               TargetGroupName: wordpress # Required. The name of the target group
       state: present
 
-    - name: add asg
-      ec2_asg: 
-        name: wordpress
-        load_balancers: [ wpalb ]
+  - name: add asg
+    ec2_asg: 
+      name: wordpress
+      load_balancers: [ wpalb ]
 
