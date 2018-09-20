@@ -20,7 +20,7 @@
       region: us-east-1
       filters:
         "tag:Name" : PrivateSubnetTest
-    register:psnetfacts
+    register: psnetfacts
       
   - name: priv subnet id
     set_fact:
