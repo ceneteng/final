@@ -30,19 +30,19 @@
       var: priv_subnet_ids
       var: pub_subnet_ids
 
-  # - name: create launch config
-  #   ec2_lc:
-  #     region: us-east-1
-  #     name: wp
-  #     image_id: ami-0deb7519e45d38c7d
-  #     key_name: devbox
-  #     security_groups: TestWPSG
-  #     instance_type: t2.micro
-  #     volumes:
-  #     - device_name: /dev/sda1
-  #       volume_size: 8
-  #       volume_type: gp2
-  #       delete_on_termination: true
+  - name: create launch config
+    ec2_lc:
+      region: us-east-1
+      name: wp
+      image_id: ami-0deb7519e45d38c7d
+      key_name: devbox
+      security_groups: TestWPSG
+      instance_type: t2.micro
+      volumes:
+      - device_name: /dev/sda1
+        volume_size: 8
+        volume_type: gp2
+        delete_on_termination: true
 
   # - name: add asg
   #   ec2_asg:
