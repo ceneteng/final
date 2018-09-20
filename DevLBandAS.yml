@@ -47,10 +47,11 @@
   - name: create target group
     elb_target_group:
       region: us-east-1
-      name: wordpress
+      name: wordpressDev
       protocol: http
       port: 80
       vpc_id: "{{ vpc_ids.0 }}"
+      state: present
     register: tg
 
   - name: create launch config
@@ -98,7 +99,7 @@
           Port: 80 # Required. The port on which the load balancer is listening.
           DefaultActions:
             - Type: forward # Required. Only 'forward' is accepted at this time
-              TargetGroupName: wordpress # Required. The name of the target group
+              TargetGroupName: wordpressDev # Required. The name of the target group
     state: present
 
 
