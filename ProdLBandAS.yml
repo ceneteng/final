@@ -99,7 +99,7 @@
           Port: 80 # Required. The port on which the load balancer is listening.
           DefaultActions:
             - Type: forward # Required. Only 'forward' is accepted at this time
-              TargetGroupName: wordpressDev # Required. The name of the target group
+              TargetGroupName: wordpressProd # Required. The name of the target group
     state: present
 
 
