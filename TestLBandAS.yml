@@ -74,23 +74,23 @@
       tags:
         - Env: test
 
-  # - elb_application_lb:
-  #     name: wpalb
-  #     security_groups:
-  #       - TestALBSG
-  #     subnets: "{{ subnet_ids }}"
+  - elb_application_lb:
+      name: wpalb
+      security_groups:
+        - TestALBSG
+      subnets: "{{ subnet_ids }}"
 
-  #     listeners:
-  #       - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
-  #         Port: 80 # Required. The port on which the load balancer is listening.
-  #         # The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.
-  #         DefaultActions:
-  #           - Type: forward # Required. Only 'forward' is accepted at this time
-  #             TargetGroupName: wordpress # Required. The name of the target group
-  #     state: present
+      listeners:
+        - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
+          Port: 80 # Required. The port on which the load balancer is listening.
+          # The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.
+          DefaultActions:
+            - Type: forward # Required. Only 'forward' is accepted at this time
+              TargetGroupName: wordpress # Required. The name of the target group
+      state: present
 
-  # - name: add asg
-  #   ec2_asg: 
-  #     name: wordpress
-  #     load_balancers: wpalb
+  - name: add asg
+    ec2_asg: 
+      name: wordpress
+      load_balancers: wpalb
 
