@@ -3,18 +3,19 @@
   connection: local
   gather_facts: false
   tasks: 
-  # - name: create launch config
-  #   ec2_lc:
-  #     name: wp
-  #     image_id: ami-0deb7519e45d38c7d
-  #     key_name: devbox
-  #     security_groups: ["TestWPSG" ]
-  #     instance_type: t2.micro
-  #     volumes:
-  #     - device_name: /dev/sda1
-  #       volume_size: 8
-  #       volume_type: gp2
-  #       delete_on_termination: true
+  - name: create launch config
+    ec2_lc:
+      name: wp
+      image_id: ami-0deb7519e45d38c7d
+      key_name: devbox
+      security_groups: ["TestWPSG" ]
+      instance_type: t2.micro
+      volumes:
+      - device_name: /dev/sda1
+        volume_size: 8
+        volume_type: gp2
+        delete_on_termination: true
+        
   - name: get subnets
     ec2_vpc_subnet_facts:
       region: us-east-1
