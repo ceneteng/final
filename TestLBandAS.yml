@@ -19,12 +19,12 @@
     ec2_vpc_subnet_facts:
       region: us-east-1
       filters:
-        "tag:Name" : "PrivateSubnetTest"
-    register: snetfacts
+        "tag:Name" : PrivateSubnetTest
+    register:psnetfacts
       
   - name: subnet id
     set_fact:
-      priv_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+      priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
 
   - debug:
       var: priv_subnet_ids
