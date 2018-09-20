@@ -74,6 +74,14 @@
       tags:
         - Env: test
 
+  - name: create target group
+    elb_target_group:
+      name: wordpress
+      protocol: http
+      port: 80
+      vpc_id: "{{ vpc_ids.0 }}"
+      state: present
+
   - elb_application_lb:
       name: wpalb
       region: us-east-1
@@ -81,19 +89,13 @@
         - TestALBSG
       subnets: "{{ pub_subnet_ids }}"
       state: present
-    register: lb
+      listeners:
+        - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
+          Port: 80 # Required. The port on which the load balancer is listening.
+          DefaultActions:
+            - Type: forward # Required. Only 'forward' is accepted at this time
+              TargetGroupName: wordpress # Required. The name of the target group
+    state: present
 
-  - name: update asg
-    ec2_asg:
-      name: wordpress
-      region: us-east-1
-      launch_config_name: wp
-      availability_zones: [ 'us-east-1e', 'us-east-1f' ]
-      min_size: 3
-      max_size: 5
-      desired_capacity: 3
-      vpc_zone_identifier: "{{ pub_subnet_ids }}"
-      tags:
-        - Env: test
-      load_balancers: [ wpalb ]
+
 
