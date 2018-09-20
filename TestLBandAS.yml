@@ -78,7 +78,7 @@
       name: wpalb
       security_groups:
         - TestALBSG
-      subnets: "{{ subnet_ids }}"
+      subnets: "{{ pub_subnet_ids }}"
 
       listeners:
         - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
