@@ -79,12 +79,12 @@
           Port: 80 # Required. The port on which the load balancer is listening.
           # The security policy that defines which ciphers and protocols are supported. The default is the current predefined security policy.
           DefaultActions:
-             - Type: forward # Required. Only 'forward' is accepted at this time
+            - Type: forward # Required. Only 'forward' is accepted at this time
               TargetGroupName: wordpress # Required. The name of the target group
       state: present
 
     - name: add asg
-    ec2_asg: 
-    name: wordpress
-    load_balancers: [ wpalb ] 
+      ec2_asg: 
+        name: wordpress
+        load_balancers: [ wpalb ]
 
