@@ -52,9 +52,7 @@
     min_size: 3
     max_size: 5
     desired_capacity: 3
-    tags:
-      - environment: test
-        propagate_at_launch: yes
+
 
 
   # - elb_application_lb:
