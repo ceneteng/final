@@ -11,7 +11,7 @@
         "tag:Name" : "PublicSubnet*Test"
     register: snetfacts
       
-  - name: subnet id
+  - name: priv subnet id
     set_fact:
       pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
   
@@ -22,7 +22,7 @@
         "tag:Name" : PrivateSubnetTest
     register:psnetfacts
       
-  - name: subnet id
+  - name: priv subnet id
     set_fact:
       priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
 
