@@ -44,31 +44,17 @@
         volume_type: gp2
         delete_on_termination: true
 
-  # - name: add asg
-  #   ec2_asg:
-  #   name: wordpress
-  #   availability_zones: [ 'us-east-1e', 'us-east-1f' ]
-  #   min_size: 3
-  #   max_size: 5
-  #   desired_capacity: 3
-  #   tags:
-  #     - environment: test
-  #       propagate_at_launch: yes
-
-  # - name: get subnets
-  #   ec2_vpc_subnet_facts:
-  #     region: us-east-1
-  #     filters:
-  #       "tag:Name" : "PublicSubnet*Test"
-  #   register: snetfacts
-      
-  # - name: subnet id
-  #   set_fact:
-  #     pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
-
-
-  # - debug:
-  #     var: subnet_ids
+  - name: add asg
+    ec2_asg:
+    name: wordpress
+    launch_config_name: wp
+    availability_zones: [ 'us-east-1e', 'us-east-1f' ]
+    min_size: 3
+    max_size: 5
+    desired_capacity: 3
+    tags:
+      - environment: test
+        propagate_at_launch: yes
 
 
   # - elb_application_lb:
