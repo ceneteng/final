@@ -76,6 +76,7 @@
 
   - elb_application_lb:
       name: wpalb
+      regions: us-east-1
       security_groups:
         - TestALBSG
       subnets: "{{ pub_subnet_ids }}"
@@ -92,5 +93,6 @@
   - name: add asg
     ec2_asg: 
       name: wordpress
+      region: us-east-1
       load_balancers: wpalb
 
