@@ -57,7 +57,7 @@
   - name: create launch config
     ec2_lc:
       region: us-east-1
-      name: wp
+      name: wpDev
       image_id: ami-0deb7519e45d38c7d
       key_name: devbox
       security_groups: DevWPSG
@@ -73,9 +73,9 @@
 
   - name: add asg
     ec2_asg:
-      name: wordpress
+      name: wordpressDev
       region: us-east-1
-      launch_config_name: wp
+      launch_config_name: wpDev
       availability_zones: [ 'us-east-1e', 'us-east-1f' ]
       min_size: 3
       max_size: 5
