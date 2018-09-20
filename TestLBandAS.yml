@@ -32,7 +32,7 @@
       name: wp
       image_id: ami-0deb7519e45d38c7d
       key_name: devbox
-      security_groups: ["TestWPSG" ]
+      security_groups: TestWPSG
       instance_type: t2.micro
       volumes:
       - device_name: /dev/sda1
@@ -47,7 +47,7 @@
     min_size: 3
     max_size: 5
     desired_capacity: 3
-    vpc_zone_identifier: {{ priv_subnet_ids.0 }}
+    vpc_zone_identifier: "{{ priv_subnet_ids.0 }}"
     tags:
       - environment: test
         propagate_at_launch: yes
@@ -72,7 +72,7 @@
       name: wpalb
       security_groups:
         - TestALBSG
-      subnets: {{ subnet_ids }}
+      subnets: "{{ subnet_ids }}"
 
       listeners:
         - Protocol: HTTP # Required. The protocol for connections from clients to the load balancer (HTTP or HTTPS) (case-sensitive).
@@ -86,5 +86,5 @@
   - name: add asg
     ec2_asg: 
       name: wordpress
-      load_balancers: [ wpalb ]
+      load_balancers: wpalb
 
