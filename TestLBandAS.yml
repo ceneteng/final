@@ -1,0 +1,44 @@
+- name: create autoscaling group
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks: 
+  - name: create launch config
+  ec2_lc:
+    name: wp
+    image_id: ami-0deb7519e45d38c7d
+    key_name: devbox
+    security_groups: ["TestWPSG" ]
+    instance_type: t2.micro
+    volumes:
+    - device_name: /dev/sda1
+      volume_size: 8
+      volume_type: gp2
+      delete_on_termination: true
+    - name: get subnets
+      ec2_vpc_subnet_facts:
+        region: us-east-1
+        filters:
+          "tag:Name" : "PublicSubnet*Test"
+      register: snetfacts
+    
+    - name: subnet id
+      set_fact:
+        subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+
+
+    - debug:
+        var: subnet_ids
+        
+  # - name: add asg
+  #   ec2_asg:
+  #   name: wordpress
+  #   load_balancers: [ 'lb1', 'lb2' ]
+  #   availability_zones: [ 'us-east-1e', 'us-east-1f' ]
+  #   min_size: 1
+  #   max_size: 10
+  #   desired_capacity: 5
+  #   vpc_zone_identifier: [ 'subnet-abcd1234', 'subnet-1a2b3c4d' ]
+  #   tags:
+  #     - environment: production
+  #       propagate_at_launch: no
