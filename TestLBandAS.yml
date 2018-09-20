@@ -15,16 +15,16 @@
     set_fact:
       pub_subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
   
-  # - name: get pub subnets
-  #   ec2_vpc_subnet_facts:
-  #     region: us-east-1
-  #     filters:
-  #       "tag:Name" : "PrivateSubnetTest"
-  #   register: psnetfacts
+  - name: get pub subnets
+    ec2_vpc_subnet_facts:
+      region: us-east-1
+      filters:
+        "tag:Name" : "PrivateSubnetTest"
+    register: psnetfacts
       
-  # - name: priv subnet id
-  #   set_fact:
-  #     priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
+  - name: priv subnet id
+    set_fact:
+      priv_subnet_ids: "{{ psnetfacts.subnets|map(attribute='id')|list }}"
 
   - debug:
       var: priv_subnet_ids
@@ -51,7 +51,6 @@
     min_size: 3
     max_size: 5
     desired_capacity: 3
-    vpc_zone_identifier: "{{ priv_subnet_ids.0 }}"
     tags:
       - environment: test
         propagate_at_launch: yes
