@@ -53,6 +53,7 @@
       min_size: 3
       max_size: 5
       desired_capacity: 3
+      vpc_subnet_identifier: "{{ priv_subnet_ids.0 }}""
 
 
 
