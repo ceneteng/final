@@ -84,9 +84,16 @@
     register: lb
 
   - name: update asg
-    ec2_asg: 
+    ec2_asg:
       name: wordpress
       region: us-east-1
-      load_balancers: 
-        - wpalb
+      launch_config_name: wp
+      availability_zones: [ 'us-east-1e', 'us-east-1f' ]
+      min_size: 3
+      max_size: 5
+      desired_capacity: 3
+      vpc_zone_identifier: "{{ pub_subnet_ids }}"
+      tags:
+        - Env: test
+      load_balancers: [ wpalb ]
 
