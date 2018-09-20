@@ -22,13 +22,13 @@
             "tag:Name" : "PublicSubnet*Test"
         register: snetfacts
       
-      - name: subnet id
-        set_fact:
-          subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
+  - name: subnet id
+    set_fact:
+      subnet_ids: "{{ snetfacts.subnets|map(attribute='id')|list }}"
 
 
-      - debug:
-          var: subnet_ids
+  - debug:
+      var: subnet_ids
 
   # - name: add asg
   #   ec2_asg:
