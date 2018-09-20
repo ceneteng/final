@@ -88,7 +88,7 @@
 
 
   - elb_application_lb:
-      name: wpalb
+      name: wpalbDev
       region: us-east-1
       security_groups:
         - DevALBSG
