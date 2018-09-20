@@ -4,7 +4,7 @@
   gather_facts: false
   tasks: 
 
-   - name: get pub subnets
+  - name: get pub subnets
     ec2_vpc_subnet_facts:
       region: us-east-1
       filters:
