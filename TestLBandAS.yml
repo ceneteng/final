@@ -46,12 +46,12 @@
 
   - name: add asg
     ec2_asg:
-    name: wordpress
-    launch_config_name: wp
-    availability_zones: [ 'us-east-1e', 'us-east-1f' ]
-    min_size: 3
-    max_size: 5
-    desired_capacity: 3
+      name: wordpress
+      launch_config_name: wp
+      availability_zones: [ 'us-east-1e', 'us-east-1f' ]
+      min_size: 3
+      max_size: 5
+      desired_capacity: 3
 
 
 
