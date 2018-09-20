@@ -4,7 +4,7 @@
   gather_facts: false
   tasks: 
 
-    - name: get VPC facts
+  - name: get VPC facts
     ec2_vpc_net_facts:
       region: us-east-1
       filters:
