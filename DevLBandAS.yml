@@ -8,7 +8,7 @@
     ec2_vpc_net_facts:
       region: us-east-1
       filters:
-        "tag:Name" : "DevelopmentVPC"
+        "tag:Name" : DevelopmentVPC
     register: vpcfacts
 
   - debug:
