@@ -44,6 +44,16 @@
       var: priv_subnet_ids
       var: pub_subnet_ids
 
+  - name: create target group
+    elb_target_group:
+      region: us-east-1
+      name: wordpress
+      protocol: http
+      port: 80
+      vpc_id: "{{ vpc_ids.0 }}"
+      state: present
+    register: tg
+
   - name: create launch config
     ec2_lc:
       region: us-east-1
@@ -73,16 +83,9 @@
       vpc_zone_identifier: "{{ pub_subnet_ids }}"
       tags:
         - Env: test
+      target_group_arns: "{{ tg.target_group_arn }}"
 
-  - name: create target group
-    elb_target_group:
-      region: us-east-1
-      name: wordpress
-      protocol: http
-      port: 80
-      vpc_id: "{{ vpc_ids.0 }}"
-      state: present
-    register: tg
+
 
   - elb_application_lb:
       name: wpalb
@@ -99,10 +102,7 @@
               TargetGroupName: wordpress # Required. The name of the target group
     state: present
 
-  - name: update asg
-    ec2_asg:
-      name: wordpress
-      region: us-east-1
-      target_group_arns: "{{ tg.target_group_arn }}"
+
+
 
 
